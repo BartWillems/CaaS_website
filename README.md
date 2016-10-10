@@ -1,27 +1,27 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [3 Col Portfolio](http://startbootstrap.com/template-overviews/3-col-portfolio/)
+# CaaS or Computer as a Service
 
-[3 Col Portfolio](http://startbootstrap.com/template-overviews/3-col-portfolio/) is a three column portfolio template for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
+CaaS is a docker platform that lets you use a containerized computer with a desktop environmen using a vnc client or simply your webbrower.
 
 ## Getting Started
 
-To begin using this template, choose one of the following options to get started:
-* [Download the latest release on Start Bootstrap](http://startbootstrap.com/template-overviews/3-col-portfolio/)
-* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-3-col-portfolio.git`
-* Fork the repo
+To begin using CaaS you should 
+* Install a LAMP stack
+* clone [this](https://github.com/BartWillems/CaaS) repo (git clone https://github.com/BartWillems/CaaS) and run install.sh
 
 ## Bugs and Issues
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-3-col-portfolio/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/3-col-portfolio/).
+Have a bug or an issue? [Open a new issue](https://github.com/BartWillems/CaaS_website/issues) here on GitHub.
+
+Please note that CaaS is currently only supported on Ubuntu.
 
 ## Creator
 
-Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
-
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
-
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+CaaS was/is being created by Bart Willems, your favorite free and open source software developer.
 
 ## Copyright and License
 
-Copyright 2013-2016 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-3-col-portfolio/blob/gh-pages/LICENSE) license.
+CaaS uses the GNU General Public License V3 which respects your basic 4 freedoms:
+* The freedom to run the program as you wish, for any purpose (freedom 0).
+* The freedom to study how the program works, and change it so it does your computing as you wish (freedom 1). Access to the source code is a precondition for this.
+* The freedom to redistribute copies so you can help your neighbor (freedom 2).
+* The freedom to distribute copies of your modified versions to others (freedom 3). By doing this you can give the whole community a chance to benefit from your changes. Access to the source code is a precondition for this.
