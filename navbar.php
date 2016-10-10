@@ -1,20 +1,22 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <!-- Login Modal -->
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog">
 		<div class="loginmodal-container">
 			<h1>Login to Your Account</h1><br>
-			<form method="post" action="register.php">
+			<form method="post" action="login.php" id="login_form">
                 <div id="form_fields">
 				    <input type="text" name="username" placeholder="Username">
 				    <input type="password" name="password" placeholder="Password">
                 </div>
-				<input type="submit" name="submit" class="login loginmodal-submit" value="Login">
+				<input type="submit" name="submit" class="login loginmodal-submit" value="Login" id="loginBtn">
 			</form>
 			<div class="login-help">
-				<a href="#" id="register">Register</a>
+				<a href="#" id="register">Don't have an account? Register now!</a>
 			</div>
 		</div>
 	</div>
@@ -48,15 +50,18 @@ session_start();
             <ul class="nav navbar-nav" id="custom_navbar_register">
                 <li>
                     <?php
-                        if(isset($_SESSION['auth'])) {
-                            if($_SESSION['auth'] == true) {
+                        if(isset($_SESSION['authenticated'])) {
+                            if($_SESSION['authenticated'] === true) {
                             ?>
                                 <a href="logout.php">Logout</a>
                             <?php
                             }
+                        } else {
+                        ?>
+                            <a href="#" data-toggle="modal" data-target="#login-modal">Login or Register</a>
+                        <?php
                         }
                     ?>
-                    <a href="#" data-toggle="modal" data-target="#login-modal">Login or Register</a>
                 </li>
             </ul>
         </div>

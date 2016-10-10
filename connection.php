@@ -1,13 +1,14 @@
  <?php
- $servername = "localhost";
- $username = "php_connector";
- $password = "temp_pass";
+ $servername = 'localhost';
+ $username = 'CaaS_admin';
+ $password = 'toor';
+ $database = 'CaaS';
 
  // Create connection
- $conn = mysqli_connect($servername, $username, $password);
+ $mysqli = mysqli_connect($servername, $username, $password, $database);
 
  // Check connection
- if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+ if (!$mysqli) {
+    die('Connection failed: ' . mysqli_connect_error());
  }
  ?> 

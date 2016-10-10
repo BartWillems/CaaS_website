@@ -28,12 +28,18 @@
 
 <body>
 <?php
+	if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+        $_SESSION['page'] = $_SERVER['PHP_SELF'];
+    }
     include_once('connection.php');
     include_once('navbar.php');
 ?>
     <!-- Page Content -->
     <div class="container">
-
+	<?php
+    if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true){
+	?>
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
@@ -182,7 +188,13 @@
             </div>
             <!-- /.row -->
         </footer>
-
+    <?php
+    } else {
+    ?>
+        <h1> You need to be authenticated to see this page </h1>
+    <?php
+    }
+    ?>
     </div>
     <!-- /.container -->
 

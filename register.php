@@ -6,35 +6,13 @@
  * Beware that DEFAULT may change over time, so you would want to prepare
  * By allowing your storage to expand past 60 characters (255 would be good)
  */
-
+error_reporting(-1);
+ini_set('display_errors', 'On');
 if(isset($_POST['submit'])){
-	include_once('connection.php');
+	include('connection.php');
 	session_start();
 	$_SESSION['error'] = '';
-	
-	// Check for existing user
-	if ($stmt = mysqli_prepare($link, "SELECT username FROM users WHERE username=?")) {
-	
-		$username = "test";
-	    /* bind parameters for markers */
-	    mysqli_stmt_bind_param($stmt, "s", $username);
-	
-	    /* execute query */
-	    mysqli_stmt_execute($stmt);
-	
-	    /* bind result variables */
-	    mysqli_stmt_bind_result($stmt, $result);
-	
-	    /* fetch value */
-	    mysqli_stmt_fetch($stmt);
-	
-	    /* close statement */
-	    mysqli_stmt_close($stmt);
-	}
-	
-	if(!empty($result)) {
-	    $_SESSION['error'] = 'username already exists';
-	} 
+
 	if(isset($_POST['username'])) {
 		$username = $_POST['username'];
 	} else {
@@ -53,31 +31,33 @@ if(isset($_POST['submit'])){
 	    $_SESSION['error'] = "passwords don't match";
 	}
 	
-	// Saul Goodman
-	if(empty($_SESSION['error'])) {
-	    $password_hash = password_hash("$password", PASSWORD_DEFAULT);
-		
-		/* Prepared statement, stage 1: prepare */
-		if (!($stmt = $mysqli->prepare("INSERT INTO users(username,password) VALUES (?,?)"))) {
-		    $_SESSION['error'] = "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
-			header('Location: index.php');
-		}
-		
-		/* Prepared statement, stage 2: bind and execute */
-		if (!$stmt->bind_param("ss", $username, $password_hash)) {
-		    $_SESSION['error'] = "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
-			header('Location: index.php');
-		}
-		
-		if (!$stmt->execute()) {
-		    $_SESSION['error'] = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-			header('Location: index.php');
-		}
-		
-		/* explicit close recommended */
-		$stmt->close();
-		header('Location: index.php');
-	} else {
-		header('Location: index.php');
-	}
+	$stmt = $mysqli->prepare("SELECT username FROM users WHERE username=? LIMIT 1");
+	
+	$stmt->bind_param('s', $username);
+	$stmt->execute($stmt);
+	
+    $count = 0;
+    while($stmt->fetch()){
+        $count++;
+    }
+    if($count>0){
+        $_SESSION['error'] = 'Error, username is not available.';
+    } else {
+	    if(empty($_SESSION['error'])) {
+	        // Saul Goodman
+	        $password_hash = password_hash("$password", PASSWORD_DEFAULT);
+            $stmt = $mysqli->prepare("INSERT INTO users(username,password) VALUES (?,?)");
+            $stmt->bind_param("ss",$username,$password_hash);
+            $stmt->execute();
+            $_SESSION['result'] = 'Successfully registered! You may now log in.';
+        }
+    }
+    $stmt->close();
+    $mysqli->close();
+    if (isset($_SESSION['page'])){
+        $page = str_replace('"', "", $_SESSION['page']);
+        header("location: $page");
+    } else {
+        header("location: index.php");
+    }
 }
