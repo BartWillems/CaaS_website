@@ -1,6 +1,6 @@
 # CaaS or Computer as a Service
 
-CaaS is a docker platform that lets you use a containerized computer with a desktop environmen using a vnc client or simply your webbrower.
+CaaS is a docker platform that lets you use a containerized computer with a desktop environmen using a vnc client or simply in your webbrower.
 
 ## Getting Started
 
