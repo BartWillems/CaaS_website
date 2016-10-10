@@ -6,8 +6,6 @@
  * Beware that DEFAULT may change over time, so you would want to prepare
  * By allowing your storage to expand past 60 characters (255 would be good)
  */
-error_reporting(-1);
-ini_set('display_errors', 'On');
 if(isset($_POST['submit'])){
 	include('connection.php');
 	session_start();
