@@ -1,3 +1,14 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+    $_SESSION['page'] = $_SERVER['PHP_SELF'];
+}
+if(!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin'){
+    http_response_code(404);
+    header("HTTP/1.0 404 Not Found");
+    header("Location: 404.html");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +20,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Home</title>
+    <title>Admin Panel</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -26,18 +37,31 @@
 
 </head>
 
-<body id="home_body">
+<body>
 <?php
-	if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-        $_SESSION['page'] = $_SERVER['PHP_SELF'];
-    }
     include_once('connection.php');
     include_once('navbar.php');
 ?>
     <!-- Page Content -->
     <div class="container">
-        
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Admin Panel</h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
     </div>
     <!-- /.container -->
 

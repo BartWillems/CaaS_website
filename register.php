@@ -12,7 +12,7 @@ if(isset($_POST['submit'])){
 	$_SESSION['error'] = '';
 
 	if(isset($_POST['username'])) {
-		$username = $_POST['username'];
+		$username = strtolower($_POST['username']);
 	} else {
 	    $_SESSION['error'] = "username is empty";
 	}

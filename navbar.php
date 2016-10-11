@@ -32,20 +32,29 @@ if (session_status() == PHP_SESSION_NONE) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <a class="navbar-brand" href="index.php">Home</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#">About</a>
+                    <a href="containers.php">Containers</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
+                    <a href="#">Account Settings</a>
                 </li>
                 <li>
                     <a href="#">Contact</a>
                 </li>
+                <?php
+                if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
+                ?>
+                <li>
+                    <a href="admin.php">Admin Panel</a>
+                </li>
+                <?php
+                }
+                ?>
             </ul>
             <ul class="nav navbar-nav" id="custom_navbar_register">
                 <li>

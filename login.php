@@ -11,7 +11,7 @@ if(isset($_POST['submit'])){
     if(empty($_POST['username']) || empty($_POST['password'])){
         $_SESSION['error'] = 'Both login and password fields are required';
     } else {
-        $username = $_POST['username'];
+        $username = strtolower($_POST['username']);
         $password = $_POST['password'];
 
         $stmt = $mysqli->prepare("SELECT password FROM users WHERE username = ? ORDER BY username LIMIT 1");
