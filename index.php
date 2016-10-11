@@ -36,8 +36,11 @@
     include_once('navbar.php');
 ?>
     <!-- Page Content -->
-    <div class="container">
-        
+    <div id="home_screen_banner">
+        <div class="container">
+            <h1 class="page_title">Welcome to C.a.a.S.</h1>
+            <h2 class="page_subtitle">The first free and open-source 'Computer as a Service' service</h2>
+        </div>
     </div>
     <!-- /.container -->
 

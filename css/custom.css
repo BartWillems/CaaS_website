@@ -96,12 +96,32 @@
 }
 
 #home_body {
-    background-image: url("../images/wallpaper-home.jpg");
+    background-image: url("../images/wallpaper-home-mobile.jpg");
     background-size: cover;
 }
 
+.page_title {
+    color: white;
+}
+
+.page_subtitle {
+    color: #DDD;
+}
+
+#home_screen_banner {
+    width: 100%;
+    background-color: rgba(255,255,255,0.1);
+    margin-top: -19px;
+}
+
 @media (min-width: 768px){
+    #home_body {
+        background-image: url("../images/wallpaper-home.jpg");
+    }
     #custom_navbar_register {
       float: right;
+    }
+    .page_title {
+        font-size: 72px;
     }
 }
