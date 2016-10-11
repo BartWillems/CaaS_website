@@ -95,6 +95,17 @@
   font-size: 12px;
 }
 
+body {
+    background-color: #2b2b2b;
+}
+
+.page-header {
+    color: #DDD;
+}
+p {
+    color: #DDD;
+}
+
 #home_body {
     background-image: url("../images/wallpaper-home-mobile.jpg");
     background-size: cover;
