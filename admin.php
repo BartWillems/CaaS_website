@@ -7,7 +7,7 @@ if(!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin'){
     http_response_code(404);
     header("HTTP/1.0 404 Not Found");
     header("Location: 404.html");
-}
+} else {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,3 +49,6 @@ if(!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin'){
 </body>
 
 </html>
+<?php
+}    
+?>

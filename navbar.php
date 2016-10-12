@@ -36,6 +36,9 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <?php
+        if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true){
+        ?>
             <ul class="nav navbar-nav">
                 <li>
                     <a href="containers.php">Containers</a>
@@ -53,6 +56,9 @@ if (session_status() == PHP_SESSION_NONE) {
                 }
                 ?>
             </ul>
+        <?php
+        }
+        ?>
             <ul class="nav navbar-nav" id="custom_navbar_register">
                 <li>
                     <?php
