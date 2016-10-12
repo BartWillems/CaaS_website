@@ -8,7 +8,7 @@ if (session_status() == PHP_SESSION_NONE) {
 	<div class="modal-dialog">
 		<div class="loginmodal-container">
 			<h1>Login to Your Account</h1><br>
-			<form method="post" action="login.php" id="login_form">
+			<form method="post" action="php_functions/login.php" id="login_form">
                 <div id="form_fields">
 				    <input type="text" name="username" placeholder="Username">
 				    <input type="password" name="password" placeholder="Password">
@@ -41,10 +41,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     <a href="containers.php">Containers</a>
                 </li>
                 <li>
-                    <a href="#">Account Settings</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
+                    <a href="account_settings.php">Account Settings</a>
                 </li>
                 <?php
                 if(isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
@@ -62,7 +59,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         if(isset($_SESSION['authenticated'])) {
                             if($_SESSION['authenticated'] === true) {
                             ?>
-                                <a href="logout.php">Logout</a>
+                                <a href="/php_functions/logout.php">Logout</a>
                             <?php
                             }
                         } else {

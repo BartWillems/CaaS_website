@@ -2,28 +2,10 @@
 <html lang="en">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>My Containers</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/3-col-portfolio.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <title>My Computers</title>
+    <?php
+    include_once('meta_includes.php');
+    ?>
 </head>
 
 <body>
@@ -32,7 +14,7 @@
         session_start();
         $_SESSION['page'] = $_SERVER['PHP_SELF'];
     }
-    include_once('connection.php');
+    include_once('php_functions/connection.php');
     include_once('navbar.php');
 ?>
     <!-- Page Content -->
@@ -43,9 +25,7 @@
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Page Heading
-                    <small>Secondary Text</small>
-                </h1>
+                <h1 class="page-header">Computers</h1>
             </div>
         </div>
         <!-- /.row -->
@@ -54,10 +34,14 @@
         <div class="row">
             <div class="col-md-4 portfolio-item">
                 <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                    <div class="container_preview" id="container_preview_base">
+                        <div class="container_preview_overlay">
+                            <span class="glyphicon glyphicon-plus add_container_btn" aria-hidden="true"></span>
+                        </div>
+                    </div>
                 </a>
                 <h3>
-                    <a href="#">Project Name</a>
+                    <a href="#">Add a Computer</a>
                 </h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
             </div>
@@ -179,19 +163,11 @@
 
         <hr>
 
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-            <!-- /.row -->
-        </footer>
     <?php
+    include_once('footer.php');
     } else {
     ?>
-        <h1> You need to be authenticated to see this page </h1>
+        <h1 class="page_title"> You need to be authenticated to see this page </h1>
     <?php
     }
     ?>
@@ -200,6 +176,17 @@
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+    <!-- MyJS -->
+    <script src="js/getContainers.js"></script>
+    <script>
+    $(document).ready(function(){
+        var $preview = $('.container_preview');
+        var $window = $(window).on('resize', function(){
+            var height = $('#container_preview_base').width() / 1.75;
+            $preview.height(height);
+        }).trigger('resize');
+    });
+    </script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
