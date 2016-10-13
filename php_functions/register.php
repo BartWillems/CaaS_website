@@ -1,18 +1,12 @@
 <?php
-/**
- * We just want to hash our password using the current DEFAULT algorithm.
- * This is presently BCRYPT, and will produce a 60 character result.
- *
- * Beware that DEFAULT may change over time, so you would want to prepare
- * By allowing your storage to expand past 60 characters (255 would be good)
- */
 if(isset($_POST['submit'])){
 	include('connection.php');
+	include('sanitizer.php');
 	session_start();
 	$_SESSION['error'] = '';
 
 	if(isset($_POST['username'])) {
-		$username = strtolower($_POST['username']);
+		$username = sanitize(strtolower($_POST['username']));
 	} else {
 	    $_SESSION['error'] = "username is empty";
 	}
@@ -43,11 +37,12 @@ if(isset($_POST['submit'])){
     } else {
 	    if(empty($_SESSION['error'])) {
 	        // Saul Goodman
+            // password_hash with  the parameter PASSWORD_DEFAULT generates a 60character bcrypt string with the salt included
 	        $password_hash = password_hash("$password", PASSWORD_DEFAULT);
             $stmt = $mysqli->prepare("INSERT INTO users(username,password) VALUES (?,?)");
             $stmt->bind_param("ss",$username,$password_hash);
             $stmt->execute();
-            $_SESSION['result'] = 'Successfully registered! You may now log in.';
+            $_SESSION['result'] = 'Successfully registered! Please wait for your administrator for approval.';
         }
     }
     $stmt->close();

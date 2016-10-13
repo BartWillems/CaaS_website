@@ -6,7 +6,7 @@ $( document ).ready(function() {
             $(".loginmodal-container").find("h1").text("Create an account");
             $("#loginBtn").attr("value","Register");
             $("#register").text("Cancel");
-            $("#login_form").attr("action","register.php");
+            $("#login_form").attr("action","php_functions/register.php");
             register = false;
         } else {
             $("#password_match").remove();
@@ -14,7 +14,7 @@ $( document ).ready(function() {
             $("#password_match").remove();
             $("#loginBtn").attr("value","Login");
             $("#register").text("Don't have an account? Register now!");
-            $("#login_form").attr("action","login.php");
+            $("#login_form").attr("action","php_functions/login.php");
             register = true;
         }
     });

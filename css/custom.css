@@ -125,7 +125,9 @@ p {
     margin-top: -19px;
 }
 .add_container_btn {
-    margin-top: 12%;
+    margin-top: -135px;
+    position: absolute;
+    top: 50%;
     font-size: 160px;
     color: #EEE;
     width: 100%;
@@ -160,6 +162,8 @@ p {
     .add_container_btn {
         font-size: 160px;
         margin-top: 16%;
+        top: 0;
+        position: relative;
     }
 }
 @media (min-width: 992px){

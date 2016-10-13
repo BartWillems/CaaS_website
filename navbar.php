@@ -41,7 +41,7 @@ if (session_status() == PHP_SESSION_NONE) {
         ?>
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="containers.php">Containers</a>
+                    <a href="computers.php">Computers</a>
                 </li>
                 <li>
                     <a href="account_settings.php">Account Settings</a>

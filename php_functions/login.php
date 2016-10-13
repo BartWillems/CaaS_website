@@ -2,17 +2,18 @@
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
-include("connection.php");
-$_SESSION["error"] = "";
+include('connection.php');
+include('sanitizer.php');
+$_SESSION['error'] = '';
 
 if(isset($_POST['submit'])){
     if(empty($_POST['username']) || empty($_POST['password'])){
         $_SESSION['error'] = 'Both login and password fields are required';
     } else {
-        $username = strtolower($_POST['username']);
+        $username = sanitize($_POST['username']);
         $password = $_POST['password'];
 
-        $stmt = $mysqli->prepare("SELECT password FROM users WHERE username = ? ORDER BY username LIMIT 1");
+        $stmt = $mysqli->prepare('SELECT password FROM users WHERE username = ? ORDER BY username LIMIT 1');
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $stmt->store_result();
@@ -23,6 +24,7 @@ if(isset($_POST['submit'])){
             if(password_verify($password,$password_verify)){
                 $_SESSION['authenticated'] = TRUE;
                 $_SESSION['username'] = $username;
+                $_SESSION['result'] = "Welcome, $username";
             } else {
                 $_SESSION['error'] = 'Incorrect username or password.';
             }
@@ -33,10 +35,10 @@ if(isset($_POST['submit'])){
         $mysqli->close();
 
         if (isset($_SESSION['page'])){
-            $page = str_replace('"', "", $_SESSION['page']);
+            $page = str_replace('"', '', $_SESSION['page']);
             header("location: $page");
         } else {
-            header("location: index.php");
+            header('location: index.php');
         }
     }
 }

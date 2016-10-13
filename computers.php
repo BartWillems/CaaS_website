@@ -22,6 +22,19 @@
 	<?php
     if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true){
 	?>
+    <div class="modal fade" id="add-computer-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    	<div class="modal-dialog">
+    		<div class="loginmodal-container">
+    			<h1>Add a computer</h1><br>
+    			<form method="post" action="php_functions/login.php" id="login_form">
+                    <div id="form_fields">
+    				    <input type="text" name="name" placeholder="Computer name">
+                    </div>
+    				<input type="submit" name="submit" class="login loginmodal-submit" value="Add Computer" id="loginBtn">
+    			</form>
+    		</div>
+    	</div>
+    </div>
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
@@ -29,11 +42,11 @@
             </div>
         </div>
         <!-- /.row -->
-
+        <?php include_once('message_display.php'); ?>
         <!-- Projects Row -->
         <div class="row">
             <div class="col-md-4 portfolio-item">
-                <a href="#">
+                <a href="#" data-toggle="modal" data-target="#add-computer-modal">
                     <div class="container_preview" id="container_preview_base">
                         <div class="container_preview_overlay">
                             <span class="glyphicon glyphicon-plus add_container_btn" aria-hidden="true"></span>
