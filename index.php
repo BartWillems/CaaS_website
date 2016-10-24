@@ -14,7 +14,6 @@
         session_start();
         $_SESSION['page'] = $_SERVER['PHP_SELF'];
     }
-    include_once('connection.php');
     include_once('navbar.php');
 ?>
     <!-- Page Content -->
