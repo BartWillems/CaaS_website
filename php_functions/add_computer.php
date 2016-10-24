@@ -25,8 +25,9 @@ function addContainer($container_name = -1,  $username = -1){
         $_SESSION['error'] = 'Input error; check your parameters';
     } else {
         include_once('connection.php');
-
+        echo "In addContainer <br>";
         $container_id = findAvailablePort();
+        echo $container_id;
         if(!is_numeric($container_id)){
             $_SESSION['error'] = $container_id; //the id is a string in this case
         } else {
@@ -54,7 +55,7 @@ function addContainer($container_name = -1,  $username = -1){
 
 // Return either an available id/port or an error string
 function findAvailablePort(){
-    include_once('connection.php');
+    @include('connection.php');
     $stmt = $mysqli->prepare("SELECT container_id FROM containers");
     $stmt->execute();
     $stmt->bind_result($container_id);

@@ -146,6 +146,15 @@ p {
     background-image: url('../images/container_preview.jpg');
     border: 1px #828282 solid;
 }
+.form-label {
+    color: white;
+    font-weight: bold;
+}
+.port-range {
+    float: left;
+    width: 20%;
+    margin-right: 10px;
+}
 @media (min-width: 768px){
     #home_body {
         background-image: url("../images/wallpaper-home.jpg");

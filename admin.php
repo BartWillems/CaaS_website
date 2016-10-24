@@ -21,7 +21,6 @@ if(!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin'){
 
 <body>
 <?php
-    include_once('connection.php');
     include_once('navbar.php');
 ?>
     <!-- Page Content -->
@@ -33,6 +32,16 @@ if(!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin'){
             </div>
         </div>
         <!-- /.row -->
+        <form method="post">
+            <div class="form-group">
+                <p class="form-label">Port Range</p>
+                <input type="number" class="form-control port-range" id="begin_port" placeholder="begin port">
+                <input type="number" class="form-control port-range" id="end_port" placeholder="end port">
+            </div>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
 
 
     <?php include_once('footer.php'); ?>
