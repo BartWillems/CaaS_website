@@ -28,7 +28,7 @@
     			<h1>Add a computer</h1><br>
     			<form method="post" action="php_functions/add_computer.php" id="login_form">
                     <div id="form_fields">
-    				    <input type="text" name="name" placeholder="Computer name">
+    				    <input type="text" name="container_name" placeholder="Computer name">
                     </div>
     				<input type="submit" name="submit" class="login loginmodal-submit" value="Add Computer" id="loginBtn">
     			</form>

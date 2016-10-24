@@ -5,18 +5,17 @@ if (session_status() == PHP_SESSION_NONE) {
 $_SESSION['error'] = NULL;
 $_SESSION['result'] = NULL; 
 
-if(isset($_POST['add_container'])){
+if(isset($_POST['container_name'])){
     if(isset($_SESSION['username'])){
         include('sanitizer.php');
         $username = sanitize($_SESSION['username']);
-        if( isset($_SESSION['container_name']) &&  isset($_SESSION['container_id']) ) {
-            addContainer(sanitize($container_name), $username);
-            if (isset($_SESSION['page'])){
-                $page = str_replace('"', "", $_SESSION['page']);
-                header("location: $page");
-            } else {
-                header("location: computers.php");
-            }
+        $container_name = sanitize($_POST['container_name']);
+        addContainer($container_name, $username);
+        if (isset($_SESSION['page'])){
+            $page = str_replace('"', "", $_SESSION['page']);
+            header("location: $page");
+        } else {
+            header("location: computers.php");
         }
     }
 }
