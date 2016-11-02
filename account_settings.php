@@ -21,12 +21,26 @@
 	<?php
     if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true){
 	?>
-        <!-- Page Header -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Account Settings</h1>
-            </div>
+    <!-- Page Header -->
+    <?php include_once('message_display.php'); ?>
+    <h1 class="page-header">Account Settings</h1>
+    <h3 class="text"> Change password </h3>
+    <form method="POST" action="php_functions/password.php">
+        <div class="form-group">
+            <label for="pwd" class="text">Current Password:</label>
+            <input type="password" placeholder="Enter your current password" class="form-control" id="pwd" name="pwd">
         </div>
+        <br>
+        <div class="form-group">
+            <label for="new_pwd" class="text">New Password:</label>
+            <input type="password" placeholder="Enter a new password" class="form-control" id="new_pwd" name="new_pwd">
+        </div>
+        <div class="form-group">
+            <label for="rep_pwd" class="text">Repeat:</label>
+            <input type="password" placeholder="Repeat your password" class="form-control" id="rep_pwd" name="rep_pwd">
+        </div>
+        <button type="submit" name="submit" class="btn btn-default">Submit</button>
+    </form>
     <?php
     include_once('footer.php');
     } else {

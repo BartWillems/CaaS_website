@@ -5,7 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
 include('connection.php');
 include('sanitizer.php');
 $_SESSION['error'] = '';
-
 if(isset($_POST['submit'])){
     if(empty($_POST['username']) || empty($_POST['password'])){
         $_SESSION['error'] = 'Both login and password fields are required';
@@ -19,27 +18,32 @@ if(isset($_POST['submit'])){
         $stmt->store_result();
         $stmt->bind_result($password_verify);
 
+        $auth = false;
         while($stmt->fetch()){
             //  Received password, password from db
             if(password_verify($password,$password_verify)){
                 $_SESSION['authenticated'] = TRUE;
                 $_SESSION['username'] = $username;
                 $_SESSION['result'] = "Welcome, $username";
+                $auth = true;
             } else {
                 $_SESSION['error'] = 'Incorrect username or password.';
             }
         }
 
+        if(!$auth){
+            $_SESSION['error'] = 'Incorrect username or password.';
+        }
+
         $stmt->free_result();
         $stmt->close();
         $mysqli->close();
-
-        if (isset($_SESSION['page'])){
-            $page = str_replace('"', '', $_SESSION['page']);
-            header("location: $page");
-        } else {
-            header('location: index.php');
-        }
+    }
+    if (isset($_SESSION['page'])){
+        $page = str_replace('"', '', $_SESSION['page']);
+        header("location: $page");
+    } else {
+        header('location: index.php');
     }
 }
 

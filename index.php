@@ -10,7 +10,7 @@
 
 <body id="home_body">
 <?php
-	if (session_status() == PHP_SESSION_NONE) {
+    if (session_status() == PHP_SESSION_NONE) {
         session_start();
         $_SESSION['page'] = $_SERVER['PHP_SELF'];
     }

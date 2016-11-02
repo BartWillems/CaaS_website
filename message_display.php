@@ -4,6 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 if(isset($_SESSION['error']) && !empty($_SESSION['error'])){
     $error_msg = $_SESSION['error'];
+    echo '<br>';
     echo '<div class="alert alert-danger">';
         echo "<strong>Whoops!</strong> $error_msg";
     echo '</div>';
