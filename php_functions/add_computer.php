@@ -1,7 +1,4 @@
 <?php
-$_SESSION['error'] = NULL;
-$_SESSION['result'] = NULL; 
-
 if(isset($_POST['addComputer'])){
     if(isset($_POST['container_name'])){
         echo json_encode(addContainer($_POST['container_name']));
@@ -21,6 +18,7 @@ function addContainer($container_name = -1){
         return 'UNAUTHORIZED';
     }
 
+
     if($container_name === -1){
         http_response_code(500);
         return 'Input error; check your parameters';
@@ -33,11 +31,17 @@ function addContainer($container_name = -1){
             include('connection.php');
             $fq_container_name = "dorowu/ubuntu-desktop-lxde-vnc-$username-$container_id";
 
-            $stmt = $mysqli->prepare("SELECT container_name FROM containers WHERE username = ?");
-            $stmt->bind_param('s', $container_name_db);
+            $stmt = $mysqli->prepare("SELECT container_name FROM containers WHERE username = ? AND container_name = ?");
+            $stmt->bind_param('ss', $username, $container_name);
+            if(!$stmt->execute()){
+                http_response_code(500);
+                $stmt->close();
+                $mysqli->close();
+                return 'Unable to execute statement';
+            }
             $count = 0;
             while($stmt->fetch()){
-                $count ++;
+                $count++;
             }
 
             if($count > 0) {
@@ -46,6 +50,7 @@ function addContainer($container_name = -1){
                 $mysqli->close();
                 return 'You already have a container with that name';
             }
+
 
             $stmt = $mysqli->prepare("INSERT INTO containers(
                 fq_container_name,username,container_name,container_id) 
@@ -72,7 +77,7 @@ function findAvailablePort(){
     if(!isset($_SESSION['username'])){
         return 'Unauthorized';
     }
-    @include('connection.php');
+    @include_once('connection.php');
     $stmt = $mysqli->prepare("SELECT container_id FROM containers");
     if(!$mysqli){
         return 'Database error';
@@ -80,21 +85,22 @@ function findAvailablePort(){
     $stmt->execute();
     $stmt->bind_result($container_id);
     $used_ports = array();
-    while($stmt->fetch){
+    while($stmt->fetch()){
         array_push($used_ports, $container_id);
     }
     $stmt->free_result();
     $stmt->close();
 
-
     $stmt = $mysqli->prepare('SELECT port_range FROM configuration LIMIT 1');
     $stmt->execute();
     $stmt->bind_result($port_range_db);
-    while($stmt->fetch){
-        $port_range = explode("-",$port_range_db);
+    while($stmt->fetch()){
+        $port_range = explode('-',$port_range_db);
     }
     $stmt->close();
     $mysqli->close();
+
+    /* return $port_range; */
 
     if(empty($used_ports)){
         return $port_range[0];

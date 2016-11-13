@@ -18,7 +18,7 @@ $( document ).ready(function() {
             'addComputer'  : true,
             'container_name'     : computerName,
         };
-        
+
         $.ajax({
             url     : 'php_functions/add_computer.php',
             data    : formData,
@@ -46,12 +46,14 @@ $( document ).ready(function() {
             encode  : 'true'
         }).done(function(data) {
             var count = 0;
-            for(var container in data){
-                console.log(data[count].container_name);
-                console.log(data[count].container_id);
-                console.log(data[count].fq_container_name);
-                count++;
-            }
+            console.log('Success');
+            console.log(data);
+            // for(var container in data){
+            //     console.log(data[count].container_name);
+            //     console.log(data[count].container_id);
+            //     console.log(data[count].fq_container_name);
+            //     count++;
+            // }
         }).fail(function(data) {
             console.log(data);
         });

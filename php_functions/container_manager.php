@@ -7,7 +7,7 @@ if(isset($_POST['request'])){
         case 'request_all_for_user':
             if(isset($_SESSION['username'])){
                 $username = $_SESSION['username'];
-                getAllContainersByUser($username);
+                echo json_encode(getAllContainersByUser($username));
             }
             break;
     }
@@ -18,7 +18,7 @@ function getAllContainersByUser($username = -1){
     if($username === -1){
         echo json_encode("false");
     } else {
-        $stmt = $mysqli->prepare("SELECT container_id, container_name, fq_container_name FROM containers WHERE username = ?");
+        $stmt = $mysqli->prepare('SELECT container_id, container_name, fq_container_name FROM containers WHERE username = ?');
         $stmt->bind_param('s', $username);
         $stmt->execute();
         $stmt->bind_result($container_id, $container_name, $fq_container_name);
@@ -26,9 +26,9 @@ function getAllContainersByUser($username = -1){
 
         $count = 0;
         while($stmt->fetch()){
-            $containers[$count]["container_id"]     =$container_id;
-            $containers[$count]["container_name"]   =$container_name;
-            $containers[$count]["fq_container_name"]=$fq_container_name;
+            $containers[$count]['container_id']     =$container_id;
+            $containers[$count]['container_name']   =$container_name;
+            $containers[$count]['fq_container_name']=$fq_container_name;
             $count++;
         }
 
@@ -36,7 +36,7 @@ function getAllContainersByUser($username = -1){
         $stmt->close();
         $mysqli->close();
 
-        echo json_encode($containers);
+        return $containers;
     }
 }
 
