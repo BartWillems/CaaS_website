@@ -19,21 +19,21 @@
 ?>
     <!-- Page Content -->
     <div class="container">
-	<?php
+    <?php
     if(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true){
-	?>
+    ?>
     <div class="modal fade" id="add-computer-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    	<div class="modal-dialog">
-    		<div class="loginmodal-container">
-    			<h1>Add a computer</h1><br>
-    			<form method="post" action="php_functions/add_computer.php" id="login_form">
-                    <div id="form_fields">
-    				    <input type="text" name="container_name" placeholder="Computer name">
-                    </div>
-    				<input type="submit" name="submit" class="login loginmodal-submit" value="Add Computer" id="loginBtn">
-    			</form>
-    		</div>
-    	</div>
+        <div class="modal-dialog">
+            <div class="loginmodal-container">
+                <h1>Add a computer</h1><br>
+                <div id="form_fields">
+                    <input type="text" id="container_name" name="container_name" placeholder="Computer name">
+                </div>
+                <input type="submit" name="submit" class="login loginmodal-submit" value="Add Computer" id="addComputerBtn">
+                <br>
+                <div id="addComputerResult"></div>
+            </div>
+        </div>
     </div>
         <!-- Page Header -->
         <div class="row">
@@ -90,7 +90,6 @@
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
     <!-- MyJS -->
-    <script src="js/getContainers.js"></script>
     <script>
     $(document).ready(function(){
         var $preview = $('.container_preview');
@@ -104,6 +103,7 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/javascript.js"></script>
+    <script src="js/computerManager.js"></script>
 
 </body>
 

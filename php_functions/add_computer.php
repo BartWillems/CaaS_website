@@ -1,62 +1,82 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 $_SESSION['error'] = NULL;
 $_SESSION['result'] = NULL; 
 
-if(isset($_POST['container_name'])){
-    if(isset($_SESSION['username'])){
-        include('sanitizer.php');
-        $username = sanitize($_SESSION['username']);
-        $container_name = sanitize($_POST['container_name']);
-        addContainer($container_name, $username);
-        if (isset($_SESSION['page'])){
-            $page = str_replace('"', "", $_SESSION['page']);
-            header("location: $page");
-        } else {
-            header("location: computers.php");
-        }
+if(isset($_POST['addComputer'])){
+    if(isset($_POST['container_name'])){
+        echo json_encode(addContainer($_POST['container_name']));
     }
 }
 
-function addContainer($container_name = -1,  $username = -1){
-    if($container_name === -1 || $username === -1){
-        $_SESSION['error'] = 'Input error; check your parameters';
+function addContainer($container_name = -1){
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if(isset($_SESSION['username'])){
+        include('sanitizer.php');
+        $username = sanitize($_SESSION['username']);
+        $container_name = sanitize($container_name);
     } else {
-        include_once('connection.php');
-        echo "In addContainer <br>";
+        http_response_code(500);
+        return 'UNAUTHORIZED';
+    }
+
+    if($container_name === -1){
+        http_response_code(500);
+        return 'Input error; check your parameters';
+    } else {
         $container_id = findAvailablePort();
-        echo $container_id;
         if(!is_numeric($container_id)){
-            $_SESSION['error'] = $container_id; //the id is a string in this case
+            http_response_code(500);
+            return $container_id; //the id is an error string from findAvailablePort in this case
         } else {
+            include('connection.php');
             $fq_container_name = "dorowu/ubuntu-desktop-lxde-vnc-$username-$container_id";
 
             $stmt = $mysqli->prepare("SELECT container_name FROM containers WHERE username = ?");
             $stmt->bind_param('s', $container_name_db);
+            $count = 0;
             while($stmt->fetch()){
-                $_SESSION['error'] = 'You already have a container with that name';
+                $count ++;
             }
 
-            if($_SESSION['error'] == NULL){
-                $stmt = $mysqli->prepare("INSERT INTO containers(
-                    fq_container_name,username,container_name,container_id) 
-                    VALUES (?,?,?,?)");
-                $stmt->bind_param("sssi",$fq_container_name, $username, $container_name, $container_id);
-                $stmt->execute();
+            if($count > 0) {
+                http_response_code(500);
                 $stmt->close();
                 $mysqli->close();
-                $_SESSION['result'] = 'Successfully registered! You may now log in.';
+                return 'You already have a container with that name';
             }
+
+            $stmt = $mysqli->prepare("INSERT INTO containers(
+                fq_container_name,username,container_name,container_id) 
+                VALUES (?,?,?,?)");
+            $stmt->bind_param("sssi",$fq_container_name, $username, $container_name, $container_id);
+            if(!$stmt->execute()){
+                http_response_code(500);
+                $stmt->close();
+                $mysqli->close();
+                return 'Unable to execute statement';
+            }
+            $stmt->close();
+            $mysqli->close();
+            return true;
         }
     }
 }
 
 // Return either an available id/port or an error string
 function findAvailablePort(){
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if(!isset($_SESSION['username'])){
+        return 'Unauthorized';
+    }
     @include('connection.php');
     $stmt = $mysqli->prepare("SELECT container_id FROM containers");
+    if(!$mysqli){
+        return 'Database error';
+    }
     $stmt->execute();
     $stmt->bind_result($container_id);
     $used_ports = array();
@@ -66,6 +86,7 @@ function findAvailablePort(){
     $stmt->free_result();
     $stmt->close();
 
+
     $stmt = $mysqli->prepare('SELECT port_range FROM configuration LIMIT 1');
     $stmt->execute();
     $stmt->bind_result($port_range_db);
@@ -74,6 +95,10 @@ function findAvailablePort(){
     }
     $stmt->close();
     $mysqli->close();
+
+    if(empty($used_ports)){
+        return $port_range[0];
+    }
 
     $begin_port = $port_range[0];
     $end_port = $port_range[1];
