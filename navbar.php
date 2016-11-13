@@ -5,21 +5,21 @@ if (session_status() == PHP_SESSION_NONE) {
 ?>
 <!-- Login Modal -->
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog">
-		<div class="loginmodal-container">
-			<h1>Login to Your Account</h1><br>
-			<form method="post" action="php_functions/login.php" id="login_form">
+    <div class="modal-dialog">
+        <div class="loginmodal-container">
+            <h1>Login to Your Account</h1><br>
+            <form method="post" action="php_functions/login.php" id="login_form">
                 <div id="form_fields">
-				    <input type="text" name="username" placeholder="Username">
-				    <input type="password" name="password" placeholder="Password">
+                    <input type="text" name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
                 </div>
-				<input type="submit" name="submit" class="login loginmodal-submit" value="Login" id="loginBtn">
-			</form>
-			<div class="login-help">
-				<a href="#" id="register">Don't have an account? Register now!</a>
-			</div>
-		</div>
-	</div>
+                <input type="submit" name="submit" class="login loginmodal-submit" value="Login" id="loginBtn">
+            </form>
+            <div class="login-help">
+                <a href="#" id="register">Don't have an account? Register now!</a>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

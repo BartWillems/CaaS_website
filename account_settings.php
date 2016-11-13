@@ -23,7 +23,7 @@
 	?>
     <!-- Page Header -->
     <?php include_once('message_display.php'); ?>
-    <h1 class="page-header">Account Settings</h1>
+    <h1 class="page-header text">Account Settings</h1>
     <h3 class="text"> Change password </h3>
     <form method="POST" action="php_functions/password.php">
         <div class="form-group">

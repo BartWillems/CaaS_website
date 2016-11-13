@@ -1,6 +1,6 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) {
-	session_start();
+    session_start();
 }
 include('connection.php');
 include('sanitizer.php');
@@ -14,7 +14,14 @@ if(isset($_POST['submit'])){
 
         $stmt = $mysqli->prepare('SELECT password FROM users WHERE username = ? ORDER BY username LIMIT 1');
         $stmt->bind_param('s', $username);
-        $stmt->execute();
+
+        if(!$stmt->execute()){
+            http_response_code(500);
+            $stmt->close();
+            $mysqli->close();
+            $_SESSION['error'] = 'Database error';
+            header('location: index.php');
+        }
         $stmt->store_result();
         $stmt->bind_result($password_verify);
 

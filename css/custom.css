@@ -116,7 +116,7 @@ p {
 }
 
 .text {
-    color: white;
+    color: white !important;
 }
 
 .page_subtitle {

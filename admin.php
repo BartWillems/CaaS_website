@@ -32,16 +32,16 @@ if(!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin'){
             </div>
         </div>
         <!-- /.row -->
-        <form method="post">
-            <div class="form-group">
-                <p class="form-label">Port Range</p>
-                <input type="tel" class="form-control port-range" id="begin_port" placeholder="begin port">
-                <input type="tel" class="form-control port-range" id="end_port" placeholder="end port">
-            </div>
-            <br>
-            <br>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
+        <div class="form-group">
+            <p class="form-label">Port Range</p>
+            <input type="tel" class="form-control port-range" id="begin_port" disabled placeholder="Loading begin port">
+            <input type="tel" class="form-control port-range" id="end_port" disabled placeholder="end port">
+        </div>
+        <br>
+        <br>
+        <button type="submit" id="setPortRangeBtn" class="btn btn-default">Submit</button>
+        <br>
+        <div id="portResult"></div>
 
 
     <?php include_once('footer.php'); ?>
@@ -54,6 +54,7 @@ if(!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin'){
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/javascript.js"></script>
+    <script src="js/admin.js"></script>
 
 </body>
 
