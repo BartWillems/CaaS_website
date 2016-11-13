@@ -35,8 +35,8 @@ if(!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin'){
         <form method="post">
             <div class="form-group">
                 <p class="form-label">Port Range</p>
-                <input type="number" class="form-control port-range" id="begin_port" placeholder="begin port">
-                <input type="number" class="form-control port-range" id="end_port" placeholder="end port">
+                <input type="tel" class="form-control port-range" id="begin_port" placeholder="begin port">
+                <input type="tel" class="form-control port-range" id="end_port" placeholder="end port">
             </div>
             <br>
             <br>
