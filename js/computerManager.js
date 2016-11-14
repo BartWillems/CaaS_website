@@ -2,7 +2,6 @@ $( document ).ready(function() {
 
     getComputers();
 
-
     $('#addComputerBtn').click(function(){
         var computerName = $('#container_name').val();
         if(computerName){
@@ -12,6 +11,32 @@ $( document ).ready(function() {
             $('#addComputerResult').html('<div class="alert alert-danger">You need to name your computer!</div>');
         }
     });
+
+    function displayComputers(computers){
+        var computerLen = computers.length;
+        var firstRow = true;
+        var height = $('#container_preview_base').width() / 1.75;
+        for(var i = 0; i<computerLen; i++){
+            var html = '';
+            html += '<div class="col-md-4 portfolio-item">';
+            html += '   <a href="computers/' + computers[i]['container_id']  + '">';
+            html += '       <div class="container_preview" id="' + computers[i]['container_id'] + '" style="height: ' + height + 'px;">';
+            html += '           <div class="container_preview_overlay">';
+            html += '               <span class="glyphicon glyphicon-play-circle add_container_btn" aria-hidden="true"></span>';
+            html += '           </div>';
+            html += '       </div>';
+            html += '   </a>';
+            html += '   <h3>'; 
+            html += '       <a href="computers/' + computers[i]['container_id']  + '">';
+            html +=             computers[i]['container_name']; 
+            html += '       </a>';
+            html += '   </h3>';
+            html += '</div>';
+            if(i <= 1){
+                $('#firstRow').append(html);
+            }
+        }
+    }
 
     function addComputer(computerName){
         var formData = {
@@ -46,14 +71,9 @@ $( document ).ready(function() {
             encode  : 'true'
         }).done(function(data) {
             var count = 0;
-            console.log('Success');
-            console.log(data);
-            // for(var container in data){
-            //     console.log(data[count].container_name);
-            //     console.log(data[count].container_id);
-            //     console.log(data[count].fq_container_name);
-            //     count++;
-            // }
+            // console.log('Success');
+            // console.log(data);
+            displayComputers(data);
         }).fail(function(data) {
             console.log(data);
         });

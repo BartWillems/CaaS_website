@@ -44,32 +44,20 @@
         <!-- /.row -->
         <?php include_once('message_display.php'); ?>
         <!-- Projects Row -->
-        <div class="row">
-            <div class="col-md-4 portfolio-item">
-                <a href="#" data-toggle="modal" data-target="#add-computer-modal">
-                    <div class="container_preview" id="container_preview_base">
-                        <div class="container_preview_overlay">
-                            <span class="glyphicon glyphicon-plus add_container_btn" aria-hidden="true"></span>
+        <div id="containers">
+            <div class="row" id="firstRow">
+                <div class="col-md-4 portfolio-item">
+                    <a href="#" data-toggle="modal" data-target="#add-computer-modal">
+                        <div class="container_preview" id="container_preview_base">
+                            <div class="container_preview_overlay">
+                                <span class="glyphicon glyphicon-plus add_container_btn" aria-hidden="true"></span>
+                            </div>
                         </div>
-                    </div>
-                </a>
-                <h3>
-                    <a href="#">Add a Computer</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <div class="container_preview" id="container_preview_base">
-                        <div class="container_preview_overlay">
-                            <span class="glyphicon glyphicon-play-circle add_container_btn" aria-hidden="true"></span>
-                        </div>
-                    </div>
-                </a>
-                <h3>
-                    <a href="#">$Computer Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                    </a>
+                    <h3>
+                        <a href="#">Add a Computer</a>
+                    </h3>
+                </div>
             </div>
         </div>
         <!-- /.row -->
@@ -92,10 +80,9 @@
     <!-- MyJS -->
     <script>
     $(document).ready(function(){
-        var $preview = $('.container_preview');
-        var $window = $(window).on('resize', function(){
+        var $window = $(window).bind('resize', function(){
             var height = $('#container_preview_base').width() / 1.75;
-            $preview.height(height);
+            $('.container_preview').height(height);
         }).trigger('resize');
     });
     </script>
