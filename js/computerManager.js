@@ -4,9 +4,15 @@ $( document ).ready(function() {
 
     $('#addComputerBtn').click(function(){
         var computerName = $('#container_name').val();
+        var password = $('#password').val();
+        var passwordRepeat = $('#password_repeat').val();
         if(computerName){
-            addComputer(computerName);
-            $('#addComputerResult').html('');
+            if(password === $('#password_repeat').val()){
+                addComputer(computerName);
+                $('#addComputerResult').html('');
+            } else {
+                $('#addComputerResult').html('<div class="alert alert-danger">Your passwords don\'t match!</div>');
+            }
         } else {
             $('#addComputerResult').html('<div class="alert alert-danger">You need to name your computer!</div>');
         }
@@ -14,10 +20,12 @@ $( document ).ready(function() {
 
     function displayComputers(computers){
         var computerLen = computers.length;
-        var firstRow = true;
         var height = $('#container_preview_base').width() / 1.75;
+        var html  = '<div class="row" id="firstRow"><div class="col-md-4 portfolio-item"><a href="#" data-toggle="modal" data-target="#add-computer-modal">';
+            html += '<div class="container_preview" id="container_preview_base"><div class="container_preview_overlay">';
+            html += '<span class="glyphicon glyphicon-plus add_container_btn" aria-hidden="true"></span></div></div>';
+            html += '</a><h3><a href="#">Add a Computer</a></h3></div>';
         for(var i = 0; i<computerLen; i++){
-            var html = '';
             html += '<div class="col-md-4 portfolio-item">';
             html += '   <a href="computers/' + computers[i]['container_id']  + '">';
             html += '       <div class="container_preview" id="' + computers[i]['container_id'] + '" style="height: ' + height + 'px;">';
@@ -32,10 +40,14 @@ $( document ).ready(function() {
             html += '       </a>';
             html += '   </h3>';
             html += '</div>';
-            if(i <= 1){
-                $('#firstRow').append(html);
-            }
         }
+        html += '</div>';
+        $('#firstRow').html(html);
+        var $window = $(window).bind('resize', function(){
+            var height = $('#container_preview_base').width() / 1.75;
+            $('.container_preview').height(height);
+        }).trigger('resize');
+
     }
 
     function addComputer(computerName){
@@ -51,6 +63,7 @@ $( document ).ready(function() {
             method  : 'post'
         }).done(function(data){
             $('#addComputerResult').html('<div class="alert alert-success">Computer added successfully!</div>');
+            getComputers();
         }).fail(function(data){
             console.log(data);
             $('#addComputerResult').html('<div class="alert alert-danger">There was an error adding the computer </div>');
@@ -71,8 +84,6 @@ $( document ).ready(function() {
             encode  : 'true'
         }).done(function(data) {
             var count = 0;
-            // console.log('Success');
-            // console.log(data);
             displayComputers(data);
         }).fail(function(data) {
             console.log(data);

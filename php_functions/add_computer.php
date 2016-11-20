@@ -5,7 +5,17 @@ if(isset($_POST['addComputer'])){
     }
 }
 
-function addContainer($container_name = -1){
+function addContainer($container_name){
+    $dbResult = addContainerToDB($container_name);
+    if($dbResult['success'] === true){
+       $port = $dbResult['port'];
+    } else {
+       return $dbResult;
+    }
+
+}
+
+function addContainerToDB($container_name = -1){
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
@@ -64,7 +74,9 @@ function addContainer($container_name = -1){
             }
             $stmt->close();
             $mysqli->close();
-            return true;
+            $result['success'] = true;
+            $result['port'] = $container_id;
+            return $result;
         }
     }
 }

@@ -28,6 +28,8 @@
                 <h1>Add a computer</h1><br>
                 <div id="form_fields">
                     <input type="text" id="container_name" name="container_name" placeholder="Computer name">
+                    <input type="password" id="password" name="container_name" placeholder="Password">
+                    <input type="password" id="password_repeat" name="container_name" placeholder="Repeat password">
                 </div>
                 <input type="submit" name="submit" class="login loginmodal-submit" value="Add Computer" id="addComputerBtn">
                 <br>
