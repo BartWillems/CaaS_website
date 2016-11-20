@@ -1,2 +1,2 @@
 RewriteEngine on
-RewriteRule ^computers/?([0-9]*) http://127.0.0.1:$1 [L,P]
+RewriteRule '^computers/?([0-9]*)' 'http://127.0.0.1:$1' [L,P]
