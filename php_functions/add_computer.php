@@ -1,17 +1,24 @@
 <?php
-if(isset($_POST['addComputer'])){
+if(isset($_POST['addComputerToDB'])){
     if(isset($_POST['container_name'])){
-        echo json_encode(addContainer($_POST['container_name']));
+        $dbResult = addContainerToDB($_POST['container_name']);
+        if($dbResult['success'] === true){
+           http_response_code(200);
+           echo json_encode($dbResult['port']);
+        } else {
+           http_response_code(500);
+           echo json_encode($dbResult);
+        }
     }
 }
 
-function addContainer($container_name){
-    $dbResult = addContainerToDB($container_name);
-    if($dbResult['success'] === true){
-       $port = $dbResult['port'];
-    } else {
-       return $dbResult;
-    }
+function addContainer($container_name, $port){
+    //$dbResult = addContainerToDB($container_name);
+    //if($dbResult['success'] === true){
+    //   $port = $dbResult['port'];
+    //} else {
+    //   return $dbResult;
+    //}
 
 }
 
@@ -32,6 +39,9 @@ function addContainerToDB($container_name = -1){
     if($container_name === -1){
         http_response_code(500);
         return 'Input error; check your parameters';
+    } else if(!ctype_alnum($container_name)){
+        http_response_code(500);
+        return 'Container name contains illegal characters.';
     } else {
         $container_id = findAvailablePort();
         if(!is_numeric($container_id)){

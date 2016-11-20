@@ -57,7 +57,7 @@
                         </div>
                     </a>
                     <h3>
-                        <a href="#">Add a Computer</a>
+                        <a href="#" data-toggle="modal" data-target="#add-computer-modal">Add a Computer</a>
                     </h3>
                 </div>
             </div>

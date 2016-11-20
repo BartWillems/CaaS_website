@@ -8,7 +8,7 @@ $( document ).ready(function() {
         var passwordRepeat = $('#password_repeat').val();
         if(computerName){
             if(password === $('#password_repeat').val()){
-                addComputer(computerName);
+                addComputerToDB(computerName);
                 $('#addComputerResult').html('');
             } else {
                 $('#addComputerResult').html('<div class="alert alert-danger">Your passwords don\'t match!</div>');
@@ -24,7 +24,7 @@ $( document ).ready(function() {
         var html  = '<div class="row" id="firstRow"><div class="col-md-4 portfolio-item"><a href="#" data-toggle="modal" data-target="#add-computer-modal">';
             html += '<div class="container_preview" id="container_preview_base"><div class="container_preview_overlay">';
             html += '<span class="glyphicon glyphicon-plus add_container_btn" aria-hidden="true"></span></div></div>';
-            html += '</a><h3><a href="#">Add a Computer</a></h3></div>';
+            html += '</a><h3><a href="#" data-toggle="modal" data-target="#add-computer-modal">Add a Computer</a></h3></div>';
         for(var i = 0; i<computerLen; i++){
             html += '<div class="col-md-4 portfolio-item">';
             html += '   <a href="computers/' + computers[i]['container_id']  + '">';
@@ -50,9 +50,9 @@ $( document ).ready(function() {
 
     }
 
-    function addComputer(computerName){
+    function addComputerToDB(computerName){
         var formData = {
-            'addComputer'  : true,
+            'addComputerToDB'  : true,
             'container_name'     : computerName,
         };
 
@@ -62,11 +62,16 @@ $( document ).ready(function() {
             dataType: 'json',
             method  : 'post'
         }).done(function(data){
+            console.log(data);
             $('#addComputerResult').html('<div class="alert alert-success">Computer added successfully!</div>');
             getComputers();
         }).fail(function(data){
             console.log(data);
-            $('#addComputerResult').html('<div class="alert alert-danger">There was an error adding the computer </div>');
+            if(data.responseJSON){
+                $('#addComputerResult').html('<div class="alert alert-danger">' + data.responseJSON  + '</div>');
+            } else {
+                $('#addComputerResult').html('<div class="alert alert-danger">There was an error adding the computer </div>');
+            }
         });
 
     }
