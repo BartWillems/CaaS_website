@@ -2,13 +2,20 @@ $( document ).ready(function() {
 
     getComputers();
 
+
+
     $('#addComputerBtn').click(function(){
         var computerName = $('#container_name').val();
         var password = $('#password').val();
         var passwordRepeat = $('#password_repeat').val();
         if(computerName){
-            if(password === $('#password_repeat').val()){
-                addComputerToDB(computerName);
+            if(password === passwordRepeat){
+                $('#addComputerBtn').button('loading');
+                $('#add-computer-modal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                addComputerToDB(computerName, password);
                 $('#addComputerResult').html('');
             } else {
                 $('#addComputerResult').html('<div class="alert alert-danger">Your passwords don\'t match!</div>');
@@ -27,16 +34,16 @@ $( document ).ready(function() {
             html += '</a><h3><a href="#" data-toggle="modal" data-target="#add-computer-modal">Add a Computer</a></h3></div>';
         for(var i = 0; i<computerLen; i++){
             html += '<div class="col-md-4 portfolio-item">';
-            html += '   <a href="computers/' + computers[i]['container_id']  + '">';
+            html += '   <a href="computers/' + computers[i]['container_id']  + '/vnc.html">';
             html += '       <div class="container_preview" id="' + computers[i]['container_id'] + '" style="height: ' + height + 'px;">';
             html += '           <div class="container_preview_overlay">';
             html += '               <span class="glyphicon glyphicon-play-circle add_container_btn" aria-hidden="true"></span>';
             html += '           </div>';
             html += '       </div>';
             html += '   </a>';
-            html += '   <h3>'; 
-            html += '       <a href="computers/' + computers[i]['container_id']  + '">';
-            html +=             computers[i]['container_name']; 
+            html += '   <h3>';
+            html += '       <a href="computers/' + computers[i]['container_id']  + '/vnc.html">';
+            html +=             computers[i]['container_name'];
             html += '       </a>';
             html += '   </h3>';
             html += '</div>';
@@ -50,10 +57,11 @@ $( document ).ready(function() {
 
     }
 
-    function addComputerToDB(computerName){
+    function addComputerToDB(computerName, password){
         var formData = {
-            'addComputerToDB'  : true,
-            'container_name'     : computerName,
+            'addComputerToDB' : true,
+            'container_name'  : computerName,
+            'password'        : password,
         };
 
         $.ajax({
@@ -65,13 +73,23 @@ $( document ).ready(function() {
             console.log(data);
             $('#addComputerResult').html('<div class="alert alert-success">Computer added successfully!</div>');
             getComputers();
+            $('#addComputerBtn').button('reset');
+            $('#add-computer-modal').modal({
+                backdrop: 'true',
+                keyboard: true
+            });
         }).fail(function(data){
             console.log(data);
+            $('#add-computer-modal').modal({
+                backdrop: 'true',
+                keyboard: true
+            });
             if(data.responseJSON){
                 $('#addComputerResult').html('<div class="alert alert-danger">' + data.responseJSON  + '</div>');
             } else {
                 $('#addComputerResult').html('<div class="alert alert-danger">There was an error adding the computer </div>');
             }
+            $('#addComputerBtn').button('reset');
         });
 
     }

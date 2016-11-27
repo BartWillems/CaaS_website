@@ -1,6 +1,2 @@
 RewriteEngine on
-#RewriteRule '^computers/(3[0-9][0-9][0-9])' 'http://127.0.0.1:$1/vnc.html' [L,P]
-#RewriteRule '^computers/(.*)' 'http://127.0.0.1:3060/$1' [L,P]
-
-
 RewriteRule '^computers/(3[0-9][0-9][0-9])/(.*)' 'http://127.0.0.1:$1/$2' [L,P]
