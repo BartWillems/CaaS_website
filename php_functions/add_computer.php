@@ -5,7 +5,7 @@ if(isset($_POST['addComputerToDB'])){
             http_response_code(500);
             echo json_encode('Only alpha-numeric characters allowed');
         } else {
-            $dbResult = addContainerToDB($_POST['container_name']);
+            $dbResult = addContainerToDB(strtolower($_POST['container_name']));
             if(isset($dbResult['success'])){
                 echo json_encode(addContainer($dbResult['name'], $dbResult['port'], $_POST['password']));
             } else {
