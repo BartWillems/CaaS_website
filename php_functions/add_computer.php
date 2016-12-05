@@ -6,7 +6,7 @@ if(isset($_POST['addComputerToDB'])){
             echo json_encode('Only alpha-numeric characters allowed');
         } else {
             $dbResult = addContainerToDB($_POST['container_name']);
-            if($dbResult['success'] === true){
+            if(isset($dbResult['success'])){
                 echo json_encode(addContainer($dbResult['name'], $dbResult['port'], $_POST['password']));
             } else {
                 http_response_code(500);
@@ -43,7 +43,7 @@ function removeContainerFromDB($name){
         session_start();
     }
     if(isset($_SESSION['username'])){
-        include('sanitizer.php');
+        include_once('sanitizer.php');
         $username = sanitize($_SESSION['username']);
         $container_name = sanitize($name);
     } else {
@@ -69,7 +69,7 @@ function addContainerToDB($container_name = -1){
         session_start();
     }
     if(isset($_SESSION['username'])){
-        include('sanitizer.php');
+        include_once('sanitizer.php');
         $username = sanitize($_SESSION['username']);
         $container_name = sanitize($container_name);
     } else {
