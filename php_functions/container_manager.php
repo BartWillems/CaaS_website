@@ -13,6 +13,71 @@ if(isset($_POST['request'])){
     }
 }
 
+if(isset($_GET['start'])){
+    startContainer($_GET['name'], $_GET['port']);
+}
+
+function startContainer($name, $port){
+    if(!isset($_SESSION['username'])){
+        http_response_code(500);
+        return 'UNAUTHORIZED';
+    }
+    $name = escapeshellcmd($name);
+    $port = escapeshellcmd($port);
+    exec("bash /usr/local/bin/containerManager.sh --action start --containerName $name --containerPort $port", $output, $returnValue);
+    if($returnValue != 0){
+        $_SESSION['error'] = "Something went wrong while starting the container... error code: $returnValue";
+        header('Location: computers.php');
+    }
+    header('Location: /computers/' . $port  . '/vnc.html');
+}
+
+function stopContainer($name, $port){
+    if(!isset($_SESSION['username'])){
+        http_response_code(500);
+        return 'UNAUTHORIZED';
+    }
+    if($_SESSION['username'] ==  getContainerUsernameById($port) || $_SESSION['username'] == 'admin'){
+        $name = escapeshellcmd($name);
+        $port = escapeshellcmd($port);
+        exec("bash /usr/local/bin/containerManager.sh --action start --containerName $name --containerPort $port", $output, $returnValue);
+        if($returnValue != 0){
+            http_response_code(500);
+            return "Something went wrong while starting the container... error code: $returnValue";
+        }
+        return true;
+    } else {
+        http_response_code(500);
+        return 'UNAUTHORIZED';
+    }
+}
+
+function getContainerUsernameById($port){
+    if(!isset($_SESSION['username'])){
+        http_response_code(500);
+        return 'UNAUTHORIZED';
+    }
+    @include_once('connection.php');
+    if(!isset($mysqli)){
+        return 'Database error';
+    }
+    $stmt = $mysqli->prepare('SELECT username FROM containers WHERE container_id = ?');
+    $stmt->bind_param('i', $port);
+    if(!$stmt->execute()){
+        $stmt->close();
+        $mysqli->close();
+        return 'Unable to fetch data';
+    }
+    $stmt->bind_result($username_db);
+    while($stmt->fetch()){
+        $username = $username_db;
+    }
+    $stmt->free_result();
+    $stmt->close();
+    $mysqli->close();
+    return $username;
+}
+
 function getAllContainersByUser($username = -1){
     @include_once('connection.php');
     if($username === -1){

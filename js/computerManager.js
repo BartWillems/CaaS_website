@@ -34,7 +34,7 @@ $( document ).ready(function() {
             html += '</a><h3><a href="#" data-toggle="modal" data-target="#add-computer-modal">Add a Computer</a></h3></div>';
         for(var i = 0; i<computerLen; i++){
             html += '<div class="col-md-4 portfolio-item">';
-            html += '   <a href="computers/' + computers[i]['container_id']  + '/vnc.html">';
+            html += '   <a href="php_functions/container_manager.php?start&name=' + computers[i]['container_name'] + '&port=' + computers[i]['container_id'] +  '">';
             html += '       <div class="container_preview" id="' + computers[i]['container_id'] + '" style="height: ' + height + 'px;">';
             html += '           <div class="container_preview_overlay">';
             html += '               <span class="glyphicon glyphicon-play-circle add_container_btn" aria-hidden="true"></span>';

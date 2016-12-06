@@ -29,11 +29,11 @@ function addContainer($name, $port, $password){
         http_response_code(500);
         return 'UNAUTHORIZED';
     }
-    $result = exec("bash /usr/local/bin/containerManager.sh --action add --containerName $name --containerPort $port --containerPassword $password", $output, $returnValue);
+    exec("bash /usr/local/bin/containerManager.sh --action add --containerName $name --containerPort $port --containerPassword $password", $output, $returnValue);
     if($returnValue != 0){
         removeContainerFromDB($name);
         http_response_code(500);
-        return  'Something went wrong while creating the container...';
+        return  "Something went wrong while creating the container... error code: $returnValue";
     }
     return true;
 }
